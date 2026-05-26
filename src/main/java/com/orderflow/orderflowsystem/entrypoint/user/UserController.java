@@ -1,9 +1,9 @@
 package com.orderflow.orderflowsystem.entrypoint.user;
 
-import com.orderflow.orderflowsystem.domain.user.User;
-import com.orderflow.orderflowsystem.domain.user.UserRepository;
+import com.orderflow.orderflowsystem.application.user.CreateUserUseCase;
 import com.orderflow.orderflowsystem.domain.user.UserRequest;
 import com.orderflow.orderflowsystem.domain.user.UserResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,31 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
 
-    private final UserRepository userRepository;
+    private final CreateUserUseCase createUserUseCase;
 
-
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(CreateUserUseCase createUserUseCase) {
+        this.createUserUseCase = createUserUseCase;
     }
 
-
     @PostMapping
-    public UserResponse createUser(@RequestBody UserRequest request){
+    public UserResponse createUser(@RequestBody @Valid UserRequest request){
 
-        User user = new User(
-                null,
-                request.name(),
-                request.email(),
-                request.password()
-        );
-
-        User savedUser = userRepository.save(user);
-
-        return new UserResponse(
-                savedUser.getId(),
-                savedUser.getName(),
-                savedUser.getEmail()
-        );
+            return createUserUseCase.execute(request);
 
     }
 
