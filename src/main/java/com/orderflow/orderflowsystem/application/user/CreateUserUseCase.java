@@ -1,5 +1,6 @@
 package com.orderflow.orderflowsystem.application.user;
 
+import com.orderflow.orderflowsystem.domain.exception.BusinessException;
 import com.orderflow.orderflowsystem.domain.user.User;
 import com.orderflow.orderflowsystem.domain.user.UserRepository;
 import com.orderflow.orderflowsystem.domain.user.UserRequest;
@@ -18,6 +19,11 @@ public class CreateUserUseCase {
     }
 
     public UserResponse execute(UserRequest request) {
+
+        userRepository.findByEmail(request.email())
+                .ifPresent(user -> {
+                    throw new BusinessException("Email already exists");
+                });
 
         User user = new User(
                 null,
