@@ -20,9 +20,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductResponse createProduct(
-            @RequestBody @Valid ProductRequest request
-    ) {
+    public ProductResponse createProduct(@RequestBody @Valid ProductRequest request) {
 
         return createProductUseCase.execute(request);
     }
