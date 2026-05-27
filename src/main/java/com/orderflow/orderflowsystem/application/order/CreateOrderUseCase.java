@@ -67,6 +67,10 @@ public class CreateOrderUseCase {
                 );
             }
 
+            product.decreaseStock(itemRequest.quantity());
+
+            productRepository.save(product);
+
             BigDecimal itemTotal =
                     product.getPrice()
                             .multiply(BigDecimal.valueOf(itemRequest.quantity()));

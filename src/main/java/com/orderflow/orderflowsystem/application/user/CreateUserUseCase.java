@@ -5,6 +5,7 @@ import com.orderflow.orderflowsystem.domain.user.User;
 import com.orderflow.orderflowsystem.domain.user.UserRepository;
 import com.orderflow.orderflowsystem.domain.user.UserRequest;
 import com.orderflow.orderflowsystem.domain.user.UserResponse;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -12,10 +13,11 @@ import org.springframework.stereotype.Service;
 public class CreateUserUseCase {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-
-    public CreateUserUseCase(UserRepository userRepository) {
+    public CreateUserUseCase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserResponse execute(UserRequest request) {
@@ -29,7 +31,7 @@ public class CreateUserUseCase {
                 null,
                 request.name(),
                 request.email(),
-                request.password()
+                passwordEncoder.encode(request.password())
         );
 
         User savedUser = userRepository.save(user);
