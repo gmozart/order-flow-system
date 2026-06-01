@@ -4,7 +4,8 @@ public record UserResponse(
 
         Long id,
         String name,
-        String email
+        String email,
+        Role role
 
 ) {
 }

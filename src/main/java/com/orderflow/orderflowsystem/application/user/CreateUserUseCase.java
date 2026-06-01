@@ -1,10 +1,7 @@
 package com.orderflow.orderflowsystem.application.user;
 
 import com.orderflow.orderflowsystem.domain.exception.BusinessException;
-import com.orderflow.orderflowsystem.domain.user.User;
-import com.orderflow.orderflowsystem.domain.user.UserRepository;
-import com.orderflow.orderflowsystem.domain.user.UserRequest;
-import com.orderflow.orderflowsystem.domain.user.UserResponse;
+import com.orderflow.orderflowsystem.domain.user.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +28,8 @@ public class CreateUserUseCase {
                 null,
                 request.name(),
                 request.email(),
-                passwordEncoder.encode(request.password())
+                passwordEncoder.encode(request.password()),
+                Role.CUSTOMER
         );
 
         User savedUser = userRepository.save(user);
@@ -39,7 +37,8 @@ public class CreateUserUseCase {
         return new UserResponse(
                 savedUser.getId(),
                 savedUser.getName(),
-                savedUser.getEmail()
+                savedUser.getEmail(),
+                savedUser.getRole()
         );
     }
 
