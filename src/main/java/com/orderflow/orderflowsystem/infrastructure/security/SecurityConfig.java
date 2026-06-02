@@ -40,7 +40,8 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/auth/login",
-                                "/users"
+                                "/users",
+                                "/actuator/**"
                         ).permitAll()
 
                         .anyRequest().authenticated()
