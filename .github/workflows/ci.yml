@@ -41,3 +41,6 @@ jobs:
             -Dsonar.projectKey=gmozart_order-flow-system \
             -Dsonar.organization=gmozart \
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+
+      - name: Build Docker image
+        run: docker build -t order-flow-api:latest .
