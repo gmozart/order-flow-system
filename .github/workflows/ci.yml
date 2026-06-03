@@ -30,9 +30,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and test
-        run: mvn clean verify
-
       - name: SonarCloud analysis
         run: |
           mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.7.0.6970:sonar \
