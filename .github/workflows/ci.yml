@@ -30,9 +30,12 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build, test and analyze with SonarCloud
+      - name: Build and test
+        run: mvn clean verify
+
+      - name: SonarCloud analysis
         run: |
-          mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
             -Dsonar.projectKey=gmozart_order-flow-system \
             -Dsonar.organization=gmozart \
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
