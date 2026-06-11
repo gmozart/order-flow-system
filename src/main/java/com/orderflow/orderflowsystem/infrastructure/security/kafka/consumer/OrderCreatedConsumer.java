@@ -14,7 +14,7 @@ public class OrderCreatedConsumer {
     public void consume(OrderCreatedEvent event) {
 
         System.out.println(
-                "Order created event received: " + event
+                "EVENT RECEIVED => " + event
         );
     }
 }
