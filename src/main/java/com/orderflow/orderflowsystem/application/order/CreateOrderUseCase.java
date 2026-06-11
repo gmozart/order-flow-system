@@ -1,6 +1,8 @@
 package com.orderflow.orderflowsystem.application.order;
 
 
+import com.orderflow.orderflowsystem.application.event.OrderCreatedEvent;
+import com.orderflow.orderflowsystem.application.event.OrderEventPublisher;
 import com.orderflow.orderflowsystem.domain.exception.BusinessException;
 import com.orderflow.orderflowsystem.domain.order.*;
 import com.orderflow.orderflowsystem.domain.product.Product;
@@ -21,17 +23,20 @@ public class CreateOrderUseCase {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final OrderItemRepository orderItemRepository;
+    private final OrderEventPublisher orderEventPublisher;
 
     public CreateOrderUseCase(
             OrderRepository orderRepository,
             UserRepository userRepository,
             ProductRepository productRepository,
-            OrderItemRepository orderItemRepository
+            OrderItemRepository orderItemRepository,
+            OrderEventPublisher orderEventPublisher
     ) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.orderItemRepository = orderItemRepository;
+        this.orderEventPublisher = orderEventPublisher;
     }
 
     @Transactional
@@ -97,6 +102,14 @@ public class CreateOrderUseCase {
         );
 
         orderRepository.save(updatedOrder);
+
+        OrderCreatedEvent event = new OrderCreatedEvent(
+                updatedOrder.getId(),
+                user.getEmail(),
+                totalAmount
+        );
+
+        orderEventPublisher.publishOrderCreated(event);
 
         return new CreateOrderResponse(
                 savedOrder.getId(),
