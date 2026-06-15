@@ -13,7 +13,9 @@ public class KafkaOrderEventPublisher implements OrderEventPublisher {
 
     private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
 
-    public KafkaOrderEventPublisher(KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate) {
+    public KafkaOrderEventPublisher(
+            KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate
+    ) {
         this.kafkaTemplate = kafkaTemplate;
     }
 

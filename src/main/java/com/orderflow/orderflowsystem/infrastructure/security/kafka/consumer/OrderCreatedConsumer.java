@@ -1,6 +1,6 @@
 package com.orderflow.orderflowsystem.infrastructure.security.kafka.consumer;
 
-import com.orderflow.orderflowsystem.application.event.OrderCreatedEvent;
+
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +11,10 @@ public class OrderCreatedConsumer {
             topics = "order-created",
             groupId = "order-flow-consumer-group"
     )
-    public void consume(OrderCreatedEvent event) {
+    public void consume(String  event) {
 
         System.out.println(
-                "EVENT RECEIVED => " + event
+                "EVENT RECEIVED =======> " + event
         );
     }
 }
