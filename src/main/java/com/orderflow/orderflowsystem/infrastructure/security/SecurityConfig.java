@@ -1,5 +1,6 @@
 package com.orderflow.orderflowsystem.infrastructure.security;
 
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -39,15 +40,23 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers(
+                                EndpointRequest.to(
+                                        "health",
+                                        "info",
+                                        "metrics",
+                                        "prometheus"
+                                )
+                        ).permitAll()
+
+                        .requestMatchers(
                                 "/auth/login",
-                                "/users",
-                                "/actuator/**"
+                                "/users"
                         ).permitAll()
 
                         .anyRequest().authenticated()
                 )
 
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(httpBasic -> httpBasic.disable())
 
                 .addFilterBefore(
                         jwtAuthenticationFilter,

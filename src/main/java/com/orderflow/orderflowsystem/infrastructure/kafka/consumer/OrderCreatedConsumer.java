@@ -1,4 +1,4 @@
-package com.orderflow.orderflowsystem.infrastructure.security.kafka.consumer;
+package com.orderflow.orderflowsystem.infrastructure.kafka.consumer;
 
 
 import org.springframework.kafka.annotation.KafkaListener;

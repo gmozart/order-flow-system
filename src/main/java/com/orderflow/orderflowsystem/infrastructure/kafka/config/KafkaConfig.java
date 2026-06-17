@@ -1,4 +1,4 @@
-package com.orderflow.orderflowsystem.infrastructure.security.kafka.config;
+package com.orderflow.orderflowsystem.infrastructure.kafka.config;
 
 import com.orderflow.orderflowsystem.application.event.OrderCreatedEvent;
 import org.apache.kafka.clients.admin.NewTopic;

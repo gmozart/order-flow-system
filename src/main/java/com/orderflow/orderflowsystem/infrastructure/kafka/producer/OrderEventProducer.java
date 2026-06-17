@@ -1,32 +1,27 @@
-package com.orderflow.orderflowsystem.infrastructure.security.kafka.producer;
+package com.orderflow.orderflowsystem.infrastructure.kafka.producer;
 
 import com.orderflow.orderflowsystem.application.event.OrderCreatedEvent;
-import com.orderflow.orderflowsystem.application.event.OrderEventPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KafkaOrderEventPublisher implements OrderEventPublisher {
-
+public class OrderEventProducer {
 
     private static final String TOPIC = "order-created";
 
     private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
 
-    public KafkaOrderEventPublisher(
+    public OrderEventProducer(
             KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate
     ) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-
-    @Override
-    public void publishOrderCreated(OrderCreatedEvent event) {
-
+    public void publish(OrderCreatedEvent event) {
         kafkaTemplate.send(
                 TOPIC,
                 event.orderId().toString(),
-                event);
-
+                event
+        );
     }
 }
