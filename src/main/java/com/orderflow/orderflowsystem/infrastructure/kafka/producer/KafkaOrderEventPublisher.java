@@ -11,11 +11,9 @@ public class KafkaOrderEventPublisher implements OrderEventPublisher {
 
     private static final String TOPIC = "order-created";
 
-    private final KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public KafkaOrderEventPublisher(
-            KafkaTemplate<String, OrderCreatedEvent> kafkaTemplate
-    ) {
+    public KafkaOrderEventPublisher(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
